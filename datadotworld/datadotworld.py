@@ -292,12 +292,12 @@ class UriParam():
         """
         self._uri = uri
 
-    def __repr__(self):
+    def to_rdf_literal(self):
         """
         The official string representation for the URI
         :return: the string representation for the URI
         """
-        return self._uri
+        return "<{}>".format(self._uri)
 
 
 # convert a literal into the SPARQL format expected by the REST endpoint
@@ -312,7 +312,7 @@ def convert_to_sparql_literal(value):
         return "\"{}\"^^<http://www.w3.org/2001/XMLSchema#decimal>".format(
             value)
     elif isinstance(value, UriParam):
-        return "<{}>".format(repr(value))
+        return value.to_rdf_literal()
     else:
         return "\"{}\"".format(value)
 
